@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+
+        #error_messages {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='base'>
+        <h1>
+            <%= htmlWebpackPlugin.options.title %>
+        </h1>
+        <button onclick="location.href = '/';" id="myButton">
+            See Weather
+        </button>
+        <form name="placeSelection">
+            <input type="radio" name="placeRadio" value="" checked>All</input>
+            <input type="radio" name="placeRadio" value="Horsens">Horsens</input>
+            <input type="radio" name="placeRadio" value="Aarhus">Aarhus</input>
+            <input type="radio" name="placeRadio" value="Copenhagen">Copenhagen</input>
+        </form>
+        <table id='forecast'>
+            <thead>
+                <tr>
+                    <td>Type</td>
+                    <td>Time</td>
+                    <td>Place</td>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Unit</td>
+                    <td>Precipitation types</td>
+                    <td>Directions</td>
+                </tr>
+            </thead>
+            <tbody id='forecast_data'></tbody>
+        </table>
+        <p id='error_messages'>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>

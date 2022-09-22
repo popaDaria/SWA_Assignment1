@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <title>
+        Forecast
+    </title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+
+        #error_messages {
+            color: red;
+        }
+    </style>
+<script defer src="forecast.js"></script></head>
+
+<body>
+    <div id='base'>
+        <h1>
+            Forecast
+        </h1>
+        <button onclick="location.href = '/';" id="myButton">
+            See Weather
+        </button>
+        <table id='forecast'>
+            <thead>
+                <tr>
+                    <td>Type</td>
+                    <td>Time</td>
+                    <td>Place</td>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Unit</td>
+                    <td>Precipitation types</td>
+                    <td>Directions</td>
+                </tr>
+            </thead>
+            <tbody id='forecast_data'></tbody>
+        </table>
+        <p id='error_messages'>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
