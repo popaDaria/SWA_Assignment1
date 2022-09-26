@@ -44,6 +44,62 @@ function ForecastMeasurement(type, unit, time, place, from, to, precipitation_ty
     return { ...baseMeasurement, getFromValue, getToValue, getPrecipTypes, getDirections }
 }
 
+export function getMinTemperature(weather){
+    let min = weather[0].getValue();
+    for (let i = 0; i < weather.length; i++) {
+        const newDate = new Date(weather[i].getTime())
+
+        if(weather[i].getType() === "temperature" && isDateYesterday(newDate.getUTCDate()) && weather[i].getValue() < min) {
+            min=weather[i].getValue();
+        }
+    }
+    return min;
+}
+
+export function getMaxTemperature(weather){
+    let max = weather[0].getValue();
+    for (let i = 0; i < weather.length; i++) {
+        const newDate = new Date(weather[i].getTime())
+        if(weather[i].getType() === "temperature" && isDateYesterday(newDate.getUTCDate()) && weather[i].getValue() > max) {
+            max=weather[i].getValue();
+        }
+    }
+    return max;
+}
+
+export function getTotalPrecipitation(weather) {
+    let sum = 0;
+    for (let i = 0; i < weather.length; i++) {
+        const newDate = new Date(weather[i].getTime())
+        if(weather[i].getType() === "precipitation" && isDateYesterday(newDate.getUTCDate())) {
+            sum+=weather[i].getValue();
+        }
+    }
+    return Math.round((sum + Number.EPSILON) * 100) / 100
+}
+
+export function getAverageWindSpeed(weather) {
+    let sum = 0;
+    let count = 0
+    for (let i = 0; i < weather.length; i++) {
+        const newDate = new Date(weather[i].getTime())
+
+        if(weather[i].getType() === "wind speed" && isDateYesterday(newDate.getUTCDate())) {
+            sum+=weather[i].getValue();
+            count++;
+        }
+    }
+    return Math.round((sum/count + Number.EPSILON) * 100) / 100
+
+}
+
+function isDateYesterday(dateToCheck) {
+    const today = new Date()
+    const yesterday = new Date(today)
+    yesterday.setDate(yesterday.getDate() - 1)
+    return dateToCheck === yesterday.getUTCDate();
+}
+
 // let x = WeatherMeasurement('precip','m/s','20220922','Horsens',12.5,'rain',undefined)
 // let x = ForecastMeasurement('precip','m/s','20220922','Horsens',12.5,15,['rain','hail'],undefined)
 // console.log(x.getPrecipTypes())

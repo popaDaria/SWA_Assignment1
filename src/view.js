@@ -1,6 +1,9 @@
+import {getMinTemperature, getMaxTemperature, getTotalPrecipitation, getAverageWindSpeed} from './model.js'
+
 export default window => {
     const document = window.document
-    const table_body = document.getElementById('weather_data')
+    const weather_table_body = document.getElementById('weather_data')
+    const functions_table_body = document.getElementById('functions_data')
     const listeners = []
 
     const listen = l => listeners.push(l)
@@ -11,7 +14,7 @@ export default window => {
     }
 
     const addWeather = p => {
-        const tr = table_body.appendChild(document.createElement('tr'))
+        const tr = weather_table_body.appendChild(document.createElement('tr'))
         tr.insertCell().appendChild(document.createTextNode(p.getType()))
         tr.insertCell().appendChild(document.createTextNode(p.getTime()))
         tr.insertCell().appendChild(document.createTextNode(p.getPlace()))
@@ -28,11 +31,23 @@ export default window => {
         } else {
             tr.insertCell()
         }
+
+    }
+    const addLastDay = p => {
+        const functions_tr = functions_table_body.appendChild(document.createElement('tr'))
+        functions_tr.insertCell().appendChild(document.createTextNode(getMinTemperature(p)))
+        functions_tr.insertCell().appendChild(document.createTextNode(getMaxTemperature(p)))
+        functions_tr.insertCell().appendChild(document.createTextNode(getTotalPrecipitation(p)))
+        functions_tr.insertCell().appendChild(document.createTextNode(getAverageWindSpeed(p)))
     }
 
     const update = model => {
-        while (table_body.firstChild) table_body.removeChild(table_body.firstChild)
+        while (weather_table_body.firstChild) weather_table_body.removeChild(weather_table_body.firstChild)
+        while (functions_table_body.firstChild) functions_table_body.removeChild(functions_table_body.firstChild)
         model.weatherData().forEach(addWeather)
+        addLastDay(model.weatherData())
+
+
     }
 
     const prompt = window.prompt.bind(window)

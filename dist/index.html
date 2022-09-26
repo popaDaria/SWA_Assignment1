@@ -30,6 +30,12 @@
         <button onclick="location.href = 'forecast.html';" id="myButton">
             See Forecast
         </button>
+        <form name="placeSelection">
+            <input type="radio" name="placeRadio" value="" checked>All</input>
+            <input type="radio" name="placeRadio" value="Horsens">Horsens</input>
+            <input type="radio" name="placeRadio" value="Aarhus">Aarhus</input>
+            <input type="radio" name="placeRadio" value="Copenhagen">Copenhagen</input>
+        </form>
         <table id='weather'>
             <thead>
                 <tr>
@@ -46,7 +52,7 @@
         </table>
         <p id='error_messages'>
     </div>
-    <script src="main.js"></script>
+    <script src="dist/main.js"></script>
 </body>
 
 </html>
