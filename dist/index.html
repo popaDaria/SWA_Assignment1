@@ -1,4 +1,4 @@
-<html>
+<html lang="uk">
 
 <head>
     <title>
@@ -31,11 +31,29 @@
             See Forecast
         </button>
         <form name="placeSelection">
-            <input type="radio" name="placeRadio" value="" checked>All</input>
-            <input type="radio" name="placeRadio" value="Horsens">Horsens</input>
-            <input type="radio" name="placeRadio" value="Aarhus">Aarhus</input>
-            <input type="radio" name="placeRadio" value="Copenhagen">Copenhagen</input>
+
+            <input type="radio" name="placeRadio" id="all" value="" checked>
+            <label for="all">All</label>
+            <input type="radio" name="placeRadio" id="horsens" value="Horsens">
+            <label for="horsens">Horsens</label>
+            <input type="radio" name="placeRadio" id="aarhus" value="Aarhus">
+            <label for="aarhus">Aarhus</label>
+            <input type="radio" name="placeRadio" id="copenhagen" value="Copenhagen">
+            <label for="copenhagen">Copenhagen</label>
         </form>
+        <h2>Information about the last day</h2>
+        <table id='functions'>
+            <thead>
+            <tr>
+                <td>Minimum temperature</td>
+                <td>Maximum temperature</td>
+                <td>Total precipitation</td>
+                <td>Average wind speed</td>
+            </tr>
+            </thead>
+            <tbody id='functions_data'></tbody>
+        </table>
+        <h2>Information about latest measurements</h2>
         <table id='weather'>
             <thead>
                 <tr>
