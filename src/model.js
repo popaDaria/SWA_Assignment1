@@ -7,7 +7,7 @@ const model = (weather) => {
 
     const latestWeatherData = () => weather
         .filter(w => isDateYesterday(new Date(w.time).getUTCDate()))
-        .filter(w => isLatestHour(new Date(w.time).getUTCHours()))
+        .filter(w => new Date(w.time).getUTCHours()===21)
         .map(w => WeatherMeasurement(w.type, w.unit, w.time, w.place, w.value, w.precipitation_type, w.direction))
 
     return { weatherData, forecastData, latestWeatherData }
@@ -97,15 +97,4 @@ function isDateYesterday(dateToCheck) {
     const yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() - 1)
     return dateToCheck === yesterday.getUTCDate();
-}
-
-function isLatestHour(hourTocheck) {
-    const today = new Date()
-    const yesterday = new Date(today)
-    yesterday.setDate(yesterday.getDate() - 1)
-    console.log(yesterday.getUTCHours())
-    if (yesterday.getUTCMinutes() >= 30)
-        return hourTocheck === yesterday.getUTCHours() + 1;
-    else
-        return hourTocheck === yesterday.getUTCHours();
 }

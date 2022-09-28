@@ -1,8 +1,11 @@
 import model from '../model.js'
+import presenter from '../presenter.js'
 import view from './view.js'
 
 function display(theView, forecast = []) {
     const theModel = model(forecast)
+    const thePresenter = presenter(theModel, theView)
+    theView.listen(thePresenter.onAction)
     theView.update(theModel)
 }
 
