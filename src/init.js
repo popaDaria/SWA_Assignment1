@@ -1,6 +1,7 @@
 import model from './model.js'
 import presenter from './presenter.js'
 import view from './view.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function display(theView, weather = []) {
     const theModel = model(weather)
@@ -10,7 +11,7 @@ function display(theView, weather = []) {
 }
 
 async function init() {
-    getData('');
+    getData('Horsens');
 }
 
 async function getData(url){

@@ -5,10 +5,20 @@ const model = (weather) => {
     const forecastData = () => weather
         .map(w => ForecastMeasurement(w.type, w.unit, w.time, w.place, w.from, w.to, w.precipitation_types, w.directions))
 
-    const latestWeatherData = () => weather
-        .filter(w => isDateYesterday(new Date(w.time).getUTCDate()))
-        .filter(w => new Date(w.time).getUTCHours()===21)
-        .map(w => WeatherMeasurement(w.type, w.unit, w.time, w.place, w.value, w.precipitation_type, w.direction))
+    const latestWeatherData = () => {
+        let measurements = weather.map(w => WeatherMeasurement(w.type, w.unit, w.time, w.place, w.value, w.precipitation_type, w.direction));
+        let types = ['temperature', 'precipitation', 'wind speed', 'cloud coverage'];
+        let latestMeasurements = [];
+        for (let j = 0; j < types.length; j++) {
+            for (let i = measurements.length - 1; i >= 0; i--) {
+                if (measurements[i].getType() === types[j]) {
+                    latestMeasurements.push(measurements[i]);
+                    break;
+                }
+            }
+        }
+        return latestMeasurements;
+    }
 
     return { weatherData, forecastData, latestWeatherData }
 }

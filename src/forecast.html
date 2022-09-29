@@ -24,29 +24,41 @@
 
 <body>
     <div id='base'>
-        <h1>
+        <h1 style="text-align: center;">
             <%= htmlWebpackPlugin.options.title %>
         </h1>
-        <button onclick="location.href = '/';" id="myButton">
+        <button onclick="location.href = '/';" id="myButton" class="btn btn-secondary mb-3">
             See Weather
         </button>
-        <form name="placeSelection">
-            <input type="radio" name="placeRadio" value="" checked>All</input>
-            <input type="radio" name="placeRadio" value="Horsens">Horsens</input>
-            <input type="radio" name="placeRadio" value="Aarhus">Aarhus</input>
-            <input type="radio" name="placeRadio" value="Copenhagen">Copenhagen</input>
+        <form name="placeSelection" class="input-group">
+            <div class="input-group-text">
+                <input type="radio" name="placeRadio" id="all" value="" checked>
+                <label for="all">All</label>
+            </div>
+            <div class="input-group-text">
+                <input type="radio" name="placeRadio" id="horsens" value="Horsens">
+                <label for="horsens">Horsens</label>
+            </div>
+            <div class="input-group-text">
+                <input type="radio" name="placeRadio" id="aarhus" value="Aarhus">
+                <label for="aarhus">Aarhus</label>
+            </div>
+            <div class="input-group-text">
+                <input type="radio" name="placeRadio" id="copenhagen" value="Copenhagen">
+                <label for="copenhagen">Copenhagen</label>
+            </div>
         </form>
-        <table id='forecast'>
+        <table id='forecast' class="table table-striped table-hover">
             <thead>
-                <tr>
-                    <td>Type</td>
-                    <td>Time</td>
-                    <td>Place</td>
-                    <td>From</td>
-                    <td>To</td>
-                    <td>Unit</td>
-                    <td>Precipitation types</td>
-                    <td>Directions</td>
+                <tr class="table-primary">
+                    <th>Type</th>
+                    <th>Time</th>
+                    <th>Place</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Unit</th>
+                    <th>Precipitation types</th>
+                    <th>Directions</th>
                 </tr>
             </thead>
             <tbody id='forecast_data'></tbody>
