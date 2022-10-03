@@ -10,4 +10,3 @@ export default (init_model, view) => {
   
     return { onAction }
   }
-  

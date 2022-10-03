@@ -2,6 +2,7 @@ import model from './model.js'
 import {WeatherMeasurement} from './model.js'
 import presenter from './presenter.js'
 import view from './view.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function display(theView, weather = []) {
     const theModel = model(weather)
@@ -11,7 +12,7 @@ function display(theView, weather = []) {
 }
 
 async function init() {
-    getData('');
+    getData('Horsens');
     hideDirection();
     hidePrecipitation();
 }
@@ -67,12 +68,8 @@ async function postData() {
 }
 
 var radioSelection = document.placeSelection.placeRadio;
-var prev = null;
 for (var i = 0; i < radioSelection.length; i++) {
     radioSelection[i].addEventListener('change', function () {
-        if (this !== prev) {
-            prev = this;
-        }
         getData(this.value)
     });
 }

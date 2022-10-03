@@ -44,10 +44,8 @@ export default window => {
     const update = model => {
         while (weather_table_body.firstChild) weather_table_body.removeChild(weather_table_body.firstChild)
         while (functions_table_body.firstChild) functions_table_body.removeChild(functions_table_body.firstChild)
-        model.weatherData().forEach(addWeather)
+        model.latestWeatherData().forEach(addWeather)
         addLastDay(model.weatherData())
-
-
     }
 
     const prompt = window.prompt.bind(window)
