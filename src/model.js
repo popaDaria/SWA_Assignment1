@@ -25,7 +25,7 @@ function SimpleMeasurement(type, unit, time, place) {
     return { getTime, getPlace, getType, getUnit }
 }
 
-function WeatherMeasurement(type, unit, time, place, value, precipitation_type, direction) {
+export function WeatherMeasurement(type, unit, time, place, value, precipitation_type, direction) {
     let baseMeasurement = SimpleMeasurement(type, unit, time, place)
     function getValue() { return value }
     function getPrecipType() { return precipitation_type }

@@ -30,8 +30,42 @@
         <button onclick="location.href = 'forecast.html';" id="myButton">
             See Forecast
         </button>
-        <form name="placeSelection">
+        <form name="addWeatherData">
+            <select name="type" id="type">
+                <option value="temperature">Temperature</option>
+                <option value="wind speed">Wind Speed</option>
+                <option value="cloud coverage">Cloud Coverage</option>
+                <option value="precipitation">Precipitation</option>
+            </select>
+            <select name="city" id="city">
+                <option value="horsens">Horsens</option>
+                <option value="aarhus">Aarhus</option>
+                <option value="copenhagen">Copenhagen</option>
+            </select>
+            <select name="precipitation-type" id="precipitation-type">
+                <option value="hail">Hail</option>
+                <option value="rain">Rain</option>
+                <option value="snow">Snow</option>
+                <option value="sleet">Sleet</option>
+            </select>
+            <select name="wind-direction" id="wind-direction">
+                <option value="north">North</option>
+                <option value="south">South</option>
+                <option value="east">East</option>
+                <option value="west">West</option>
+                <option value="north-east">Northeast</option>
+                <option value="south-east">Southeast</option>
+                <option value="north-west">Northwest</option>
+                <option value="south-west">Southwest</option>
+            </select>
+            <input name="value" id="value">
+            <button id="formButton">
+                Add weather measurement
+            </button>
 
+
+        </form>
+        <form name="placeSelection">
             <input type="radio" name="placeRadio" id="all" value="" checked>
             <label for="all">All</label>
             <input type="radio" name="placeRadio" id="horsens" value="Horsens">
@@ -70,7 +104,7 @@
         </table>
         <p id='error_messages'>
     </div>
-    <script src="dist/main.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

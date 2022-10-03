@@ -1,4 +1,5 @@
 import model from './model.js'
+import {WeatherMeasurement} from './model.js'
 import presenter from './presenter.js'
 import view from './view.js'
 
@@ -11,6 +12,8 @@ function display(theView, weather = []) {
 
 async function init() {
     getData('');
+    hideDirection();
+    hidePrecipitation();
 }
 
 async function getData(url){
@@ -26,6 +29,43 @@ async function getData(url){
     }
 }
 
+const formButton = document.getElementById('formButton');
+
+formButton.addEventListener('click', postData)
+
+async function postData() {
+    const type = typeSelect.value;
+    const city = document.getElementById('city').value;
+    let precipitationType;
+    let windDirection;
+    let unit;
+    if (type === 'precipitation'){
+        precipitationType = document.getElementById('precipitation-type').value;
+        unit = 'mm'
+    }
+    if(type === 'wind speed'){
+        windDirection = document.getElementById('wind-direction').value;
+        unit = 'm/s'
+    }
+    if(type === 'temperature'){
+        unit = 'C'
+    }
+    if(type === 'cloud coverage'){
+        unit = '%'
+    }
+    const value = document.getElementById('value').value;
+    const weather = WeatherMeasurement(type, new Date(), city, value, unit, precipitationType, windDirection)
+    try {
+
+        const headers = { 'Content-Type': 'application/json', Accept: 'application/json' }
+        const weatherResponse= await fetch('http://localhost:8080/data', { method: 'POST', body: weather, headers })
+        if (!weatherResponse.ok) throw weatherResponse.statusText
+        theView.displayError('')
+    } catch (e) {
+        theView.displayError(e)
+    }
+}
+
 var radioSelection = document.placeSelection.placeRadio;
 var prev = null;
 for (var i = 0; i < radioSelection.length; i++) {
@@ -35,6 +75,38 @@ for (var i = 0; i < radioSelection.length; i++) {
         }
         getData(this.value)
     });
+}
+
+const typeSelect = document.getElementById('type');
+
+typeSelect.addEventListener('change', () => {
+    if (typeSelect.value === 'temperature' || typeSelect.value === 'cloud coverage') {
+        hidePrecipitation();
+        hideDirection();
+    } else if(typeSelect.value === 'wind speed'){
+        showDirection();
+        hidePrecipitation();
+    } else {
+        showPrecipitation();
+        hideDirection();
+    }
+});
+
+function hidePrecipitation() {
+    const prec = document.getElementById('precipitation-type');
+    prec.style.display = 'none';
+}
+function showPrecipitation() {
+    const prec = document.getElementById('precipitation-type');
+    prec.style.display = 'initial';
+}
+function hideDirection() {
+    const dir = document.getElementById('wind-direction');
+    dir.style.display = 'none';
+}
+function showDirection() {
+    const dir = document.getElementById('wind-direction');
+    dir.style.display = 'initial';
 }
 
 init()
