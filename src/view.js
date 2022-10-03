@@ -4,9 +4,6 @@ export default window => {
     const document = window.document
     const weather_table_body = document.getElementById('weather_data')
     const functions_table_body = document.getElementById('functions_data')
-    const listeners = []
-
-    const listen = l => listeners.push(l)
 
     const displayError = e => {
         const msg_board = document.getElementById('error_messages')
@@ -50,5 +47,5 @@ export default window => {
 
     const prompt = window.prompt.bind(window)
 
-    return { listen, displayError, prompt, update }
+    return { displayError, prompt, update }
 }

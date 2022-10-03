@@ -19,8 +19,9 @@ const model = (weather) => {
         }
         return latestMeasurements;
     }
+    const addWeatherMeasurement = w => model(weather.concat(w))
 
-    return { weatherData, forecastData, latestWeatherData }
+    return { weatherData, forecastData, latestWeatherData, addWeatherMeasurement }
 }
 
 export default model

@@ -1,13 +1,10 @@
 import model from './model.js'
-import {WeatherMeasurement} from './model.js'
-import presenter from './presenter.js'
+import { WeatherMeasurement } from './model.js'
 import view from './view.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function display(theView, weather = []) {
     const theModel = model(weather)
-    const thePresenter = presenter(theModel, theView)
-    theView.listen(thePresenter.onAction)
     theView.update(theModel)
 }
 
@@ -17,10 +14,10 @@ async function init() {
     hidePrecipitation();
 }
 
-async function getData(url){
+async function getData(url) {
     const theView = view(window)
     try {
-        const response = await fetch('http://localhost:8080/data/'+url)
+        const response = await fetch('http://localhost:8080/data/' + url)
         if (!response.ok) throw response.statusText
         const weather = await response.json()
         display(theView, weather)
@@ -30,38 +27,51 @@ async function getData(url){
     }
 }
 
-const formButton = document.getElementById('formButton');
+var form = document.getElementById("addWeatherData");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
 
+const formButton = document.getElementById('formButton');
 formButton.addEventListener('click', postData)
 
 async function postData() {
+    const theView = view(window)
     const type = typeSelect.value;
     const city = document.getElementById('city').value;
     let precipitationType;
     let windDirection;
     let unit;
-    if (type === 'precipitation'){
+    if (type === 'precipitation') {
         precipitationType = document.getElementById('precipitation-type').value;
         unit = 'mm'
     }
-    if(type === 'wind speed'){
+    if (type === 'wind speed') {
         windDirection = document.getElementById('wind-direction').value;
         unit = 'm/s'
     }
-    if(type === 'temperature'){
+    if (type === 'temperature') {
         unit = 'C'
     }
-    if(type === 'cloud coverage'){
+    if (type === 'cloud coverage') {
         unit = '%'
     }
     const value = document.getElementById('value').value;
-    const weather = WeatherMeasurement(type, new Date(), city, value, unit, precipitationType, windDirection)
-    try {
+    const weather = WeatherMeasurement(type, unit, new Date(), city, value, precipitationType, windDirection)
+    let jsonString = '';
+    if (windDirection) {
+        jsonString = JSON.stringify({ value: weather.getValue(), direction: weather.getDirection(), type: weather.getType(), unit: weather.getUnit(), time: weather.getTime(), place: weather.getPlace() })
+    } else if (precipitationType) {
+        jsonString = JSON.stringify({ value: weather.getValue(), precipitation_type: weather.getPrecipType(), type: weather.getType(), unit: weather.getUnit(), time: weather.getTime(), place: weather.getPlace() })
+    } else {
+        jsonString = JSON.stringify({ value: weather.getValue(), type: weather.getType(), unit: weather.getUnit(), time: weather.getTime(), place: weather.getPlace() })
+    }
 
+    try {
         const headers = { 'Content-Type': 'application/json', Accept: 'application/json' }
-        const weatherResponse= await fetch('http://localhost:8080/data', { method: 'POST', body: weather, headers })
+        const weatherResponse = await fetch('http://localhost:8080/data', { method: 'POST', body: jsonString, headers })
         if (!weatherResponse.ok) throw weatherResponse.statusText
         theView.displayError('')
+        console.log(weatherResponse)
     } catch (e) {
         theView.displayError(e)
     }
@@ -80,7 +90,7 @@ typeSelect.addEventListener('change', () => {
     if (typeSelect.value === 'temperature' || typeSelect.value === 'cloud coverage') {
         hidePrecipitation();
         hideDirection();
-    } else if(typeSelect.value === 'wind speed'){
+    } else if (typeSelect.value === 'wind speed') {
         showDirection();
         hidePrecipitation();
     } else {

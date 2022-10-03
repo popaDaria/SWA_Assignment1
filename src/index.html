@@ -27,28 +27,27 @@
         <h1 style="text-align: center;">
             <%= htmlWebpackPlugin.options.title %>
         </h1>
-        <button onclick="location.href = 'forecast.html';" id="myButton" class="btn btn-secondary mb-3">
-            See Forecast
-        </button>
-        <form name="addWeatherData">
-            <select name="type" id="type">
+
+        <h2>Add new weather data</h2>
+        <form id="addWeatherData" class="input-group">
+            <select name="type" id="type" class="custom-select" style="margin-right: 1rem;">
                 <option value="temperature">Temperature</option>
                 <option value="wind speed">Wind Speed</option>
                 <option value="cloud coverage">Cloud Coverage</option>
                 <option value="precipitation">Precipitation</option>
             </select>
-            <select name="city" id="city">
-                <option value="horsens">Horsens</option>
-                <option value="aarhus">Aarhus</option>
-                <option value="copenhagen">Copenhagen</option>
+            <select name="city" id="city" class="custom-select" style="margin-right: 1rem;">
+                <option value="Horsens">Horsens</option>
+                <option value="Aarhus">Aarhus</option>
+                <option value="Copenhagen">Copenhagen</option>
             </select>
-            <select name="precipitation-type" id="precipitation-type">
+            <select name="precipitation-type" id="precipitation-type" class="custom-select" style="margin-right: 1rem;">
                 <option value="hail">Hail</option>
                 <option value="rain">Rain</option>
                 <option value="snow">Snow</option>
                 <option value="sleet">Sleet</option>
             </select>
-            <select name="wind-direction" id="wind-direction">
+            <select name="wind-direction" id="wind-direction" class="custom-select" style="margin-right: 1rem;">
                 <option value="north">North</option>
                 <option value="south">South</option>
                 <option value="east">East</option>
@@ -58,13 +57,16 @@
                 <option value="north-west">Northwest</option>
                 <option value="south-west">Southwest</option>
             </select>
-            <input name="value" id="value">
-            <button id="formButton">
+            <input name="value" id="value" class="input-group-text" type="number" step=0.1>
+            <button id="formButton" class="btn btn-success">
                 Add weather measurement
             </button>
-
-
         </form>
+
+        <button onclick="location.href = 'forecast.html';" id="myButton" class="btn btn-secondary mb-3">
+            See Forecast
+        </button>
+
         <form name="placeSelection" class="input-group">
             <div class="input-group-text">
                 <input type="radio" name="placeRadio" id="horsens" value="Horsens" checked>
